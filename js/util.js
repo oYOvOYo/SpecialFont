@@ -2,7 +2,16 @@ let leon;
 
 
 window.onload = () => {
-  init();
+  var media = document.querySelector('body');
+  // media.click = () => {
+  //   init();
+  // }
+
+  media.addEventListener('click', event=> {
+    document.getElementById('bgMusic').play();
+    init();
+  })
+
 };
 
 function init() {
