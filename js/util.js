@@ -8,7 +8,7 @@ window.onload = () => {
   // }
 
   media.addEventListener('click', event=> {
-    document.getElementById('bgMusic').play();
+    document.getElementById('bg.music').play();
     init();
   })
 
