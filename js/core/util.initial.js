@@ -1,6 +1,3 @@
-var canvas, ctx;
-
-
 const pixelRatio = 2;
 let isDown = false, moveX = 0, moveY = 0, offsetX = 0, offsetY = 0;
 
@@ -9,10 +6,6 @@ let sw = document.body.clientWidth;
 let sh = document.body.clientHeight;
 
 function generateCanvas() {
-    canvas = document.createElement('canvas');
-    document.body.appendChild(canvas);
-    ctx = canvas.getContext("2d");
-
     window.addEventListener('resize', canvasResize, false);
     canvasResize();
     // moveEvent(canvas);
