@@ -1,3 +1,7 @@
+// initial cancas size part from origin codes
+
+
+
 const pixelRatio = 2;
 let isDown = false, moveX = 0, moveY = 0, offsetX = 0, offsetY = 0;
 

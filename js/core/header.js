@@ -1,3 +1,9 @@
+// universal header for global variable
 
-var canvas = document.getElementById("font-board");
-var ctx = canvas.getContext("2d");
+
+
+
+let canvas = document.getElementById("font-board");
+let ctx = canvas.getContext("2d");
+
+let lemons = new Map();
