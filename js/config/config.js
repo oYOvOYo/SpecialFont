@@ -1,16 +1,25 @@
 var config = {
-  "create": 
-    {"01": () => {return 123;}}
-  ,
-  "animation": {}
+  "create": {
+    "01": () => {
+      return new LeonSans({
+        text: 'world.execute(me);',
+        color: ['#FFFFFF'],
+        size: 80,
+        weight: 200
+      });
+    }
+  },
+  "animation": {
+    "01": (x) => {
+      TweenMax.to(x, 2, [1, 1])
+    }
+  },
+  "timeline": [
+    [0, "create", "01"],
+  ]
 
 
-  // leon = new LeonSans({
-  //   text: 'world.execute(me);',
-  //   color: ['#FFFFFF'],
-  //   size: 80,
-  //   weight: 200
-  // });
+
 }
 
 
