@@ -34,13 +34,13 @@ class Core {
     // timer
     this.initialTime = new Date();
     this.nowTime = new Date();
+    this.timelineIndex = 0;
   }
 
 
   play(config) {
     this.config = config;
     this.initial();
-    console.log(this.config);
   }
 
   position(x, y, rect) {
@@ -56,6 +56,7 @@ class Core {
   animate(t) {
     requestAnimationFrame(this.animate);
 
+    this.nowTime = new Date();
     ctx.clearRect(0, 0, sw, sh);
     for (var [key, value] of this.lemons) {
       let position = this.lemonsPos["key"];
@@ -64,6 +65,26 @@ class Core {
       value.draw(ctx);
     }
 
+    for (let i = this.timelineIndex; i < this.config["timeline"].length; i++) {
+      let eachTimeLine = this.config["timeline"][i];
+      if (this.nowTime - this.initialTime < eachTimeLine[0] * 1000) break;
+      this.excute(eachTimeLine[1], eachTimeLine.slice(2));
+    }
+  }
 
+  excute(command, argv) {
+    switch (command) {
+      case "create":
+        this.lemons[argv[0]] = this.config["create"][argv[0]]();
+        break;
+      case "animate":
+        
+        break;
+      case "repeat":
+        this.initial();
+        break;
+      case "default":
+        break
+    }
   }
 }
