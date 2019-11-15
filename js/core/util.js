@@ -26,6 +26,8 @@ class Core {
   constructor() {
     this.lemons = new Map();
     this.lemonsPos = new Map();
+
+    this.animate = this.animate.bind(this);
   }
 
   initial() {
@@ -35,12 +37,6 @@ class Core {
     this.initialTime = new Date();
     this.nowTime = new Date();
     this.timelineIndex = 0;
-  }
-
-
-  play(config) {
-    this.config = config;
-    this.initial();
   }
 
   position(x, y, rect) {
@@ -53,6 +49,23 @@ class Core {
     return x, y;
   }
 
+  excute(command, argv) {
+    switch (command) {
+      case "create":
+        this.lemons[argv[0]] = this.config["create"][argv[0]]();
+        break;
+      case "animate":
+        let animate = this.config["animation"][argv[0]]
+        animate[1](animate[0] == "lemons" ? this.lemons[argv[1]] : this.lemonsPos[argv[1]])
+        break;
+      case "repeat":
+        this.initial();
+        break;
+      case "default":
+        break
+    }
+  }
+  
   animate(t) {
     requestAnimationFrame(this.animate);
 
@@ -72,19 +85,10 @@ class Core {
     }
   }
 
-  excute(command, argv) {
-    switch (command) {
-      case "create":
-        this.lemons[argv[0]] = this.config["create"][argv[0]]();
-        break;
-      case "animate":
-        
-        break;
-      case "repeat":
-        this.initial();
-        break;
-      case "default":
-        break
-    }
+
+  play(config) {
+    this.config = config;
+    this.initial();
+    requestAnimationFrame(this.animate);
   }
 }

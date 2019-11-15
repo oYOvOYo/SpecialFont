@@ -10,12 +10,17 @@ var config = {
     }
   },
   "animation": {
-    "01": (x) => {
+    "01": ["lemonsPos", (x) => {
       TweenMax.to(x, 2, [1, 1])
-    }
+    }],
+    "02": ["lemons", (x) => {
+      TweenMax.to(x, 2, [1, 1])
+    }],
+
   },
   "timeline": [
     [0, "create", "01"],
+    [0, "animation", "01", "01"],
   ]
 
 
