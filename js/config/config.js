@@ -11,20 +11,28 @@ var config = {
   },
   "animation": {
     "01": ["lemonsPos", (x) => {
-      TweenMax.to(x, 2, [1, 1])
+      TweenMax.fromTo(x, 2, [0.25, 0.5], [0.5, 0.25])
+    }],/*  */
+    "02": ["lemonsPos", (x) => {
+      TweenMax.to(x, 2, [0.75, 0.5])
     }],
-    "02": ["lemons", (x) => {
-      TweenMax.to(x, 2, [1, 1])
+    "03": ["lemonsPos", (x) => {
+      TweenMax.to(x, 2, [0.5, 0.75])
     }],
+    "04": ["lemonsPos", (x) => {
+      TweenMax.to(x, 2, [0.25, 0.5])
+    }],
+
 
   },
   "timeline": [
     [0, "create", "01"],
     [0, "animation", "01", "01"],
+    [2, "animation", "02", "01"],
+    [4, "animation", "03", "01"],
+    [6, "animation", "04", "01"],
+    [8, "repeat"]
   ]
-
-
-
 }
 
 
