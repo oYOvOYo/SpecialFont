@@ -1,48 +1,43 @@
 // main part of core logic
 
-// let timer0 = new Date();
-// let timer1, timer2 = timer0;
-
 window.onload = () => {
 
   core = new Core();
   core.play(config);
 
-  // lemonsPos["01"] = [0, 0];
-  // config.animation["01"](lemonsPos["01"]);
-  // requestAnimationFrame(animate);
-
-
-  // var body = document.querySelector('body');
-  // var media = document.getElementById('bg-music');
-  // body.addEventListener('click', event => {
-  //   media.play();
-  //   requestAnimationFrame(animate);
-  // })
+  let body = document.querySelector('body');
+  let media = document.getElementById('bg-music');
+  let clickEvent = event => {
+    media.play();
+    core.play(config);
+    body.removeEventListener('click', clickEvent);
+  };
+  // hook
+  body.addEventListener('click', clickEvent);
 };
 
 class Core {
 
   constructor() {
-    
     this.initial = this.initial.bind(this);
     this.animate = this.animate.bind(this);
     this.excute = this.excute.bind(this);
-
   }
 
   initial() {
+    // call global function
     generateCanvas();
+    // initial
     this.lemons = new Map();
-    this.lemonsPos = new Map();
+    this.lemonsConfig = new Map();
     // timer
     this.initialTime = new Date();
     this.nowTime = new Date();
     this.timelineIndex = 0;
   }
 
+  // user persetage
   position(x, y, rect) {
-
     x = x * sw;
     y = y * sh;
 
@@ -52,22 +47,23 @@ class Core {
   }
 
   excute(command, argv) {
-    console.log(command, argv);
 
     switch (command) {
       case "create":
-        this.lemons.set(argv[0], this.config["create"][argv[0]]());
-        this.lemonsPos.set(argv[0], [0, 0]);
+        let id = argv[0];
+        this.lemons.set(id, this.config["create"][id]());
+        this.lemonsConfig.set(id, [0, 0]);
         break;
       case "animation":
         let animate = this.config["animation"][argv[0]]
         animate[1](animate[0] == "lemons" ? 
-          this.lemons.get(argv[1]) : this.lemonsPos.get(argv[1]));
+          this.lemons.get(argv[1]) : this.lemonsConfig.get(argv[1]));
         break;
       case "repeat":
         this.initial();
         break;
       case "default":
+        console.log("error", command, argv);
         break
     }
   }
@@ -78,8 +74,8 @@ class Core {
     this.nowTime = new Date();
     ctx.clearRect(0, 0, sw, sh);
 
-    for (var [key, value] of this.lemons) {
-      let position = this.lemonsPos.get(key);
+    for (let [key, value] of this.lemons) {
+      let position = this.lemonsConfig.get(key);
       position = this.position(position[0], position[1], value.rect);
       value.position(position[0], position[1]);
       value.draw(ctx);
